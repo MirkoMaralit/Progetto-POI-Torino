@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Progetto POI - Torino</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
+
+
+  <!-- list icon -->
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+</head>
+
+<body>
+  <div class="d-block d-flex justify-content-center vh-100 ">
+    <div class="d-flex justify-content-center col-12 col-sm-11">
+      <a href="detail.html">nega</a>
+      <div class="d-flex justify-content-center col-12 col-sm-11">
+
+        <!-- Bottone per cambiare a mappa -->
+        <div id="change_div" class="d-none change_div shadow-sm">
+          <button id="change" type="button" class="col-12"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+              height="32" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+            </svg></button>
+        </div>
+
+        <!-- Div Blur transparent -->
+        <div id="blur_div_css" class="d-flex justify-content-center col-12 col-sm-11 align-self-end shadow-lg">
+          <!-- Div log in -->
+          <div id="pre_login" class="d-block d-flex justify-content-center col-12 col-sm-11 p-5">
+            <form class="rounded-4 shadow-lg bg-white col-12 col-sm-5 p-5">
+              <h2 class="my-2">Login Utente</h2>
+              <div class="form-floating my-4">
+                <input type="text" class="form-control" id="inUserName" placeholder="Username">
+                <label for="inUserName">Username</label>
+              </div>
+              <div class="form-floating my-4">
+                <input type="password" class="form-control" id="inUserPass" placeholder="Password">
+
+                <label for="inUserPass">Password</label>
+              </div>
+              <div class="btn-group col-12">
+                <a href="admin.html" class="px-4 py-3 my-1">Admin Login</a>
+                <button id="btn_login_utente" type="button" class="btn rounded btn-block btn-primary">Accedi</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Div post log in elenco POI -->
+          <div id="post_login_list" class="d-none col-11 col-sm-10 align-self-end">
+
+            <!-- Div che contiene l'header dei POI -->
+            <div id="list_header_css" class="d-flex justify-content-center align-items-end col-12">
+              <div class="col-9">
+                <!-- Titolo -->
+                <h1 style="font-size: calc(1em + 2.5vw);">Torino - Punti di Interesse</h1>
+              </div>
+              <div class="col-3 d-flex justify-content-end"
+                style="height:calc(1em + 2.5vw);padding:0px 20px 20px 20px;">
+                <!-- Bottone Log out -->
+                <button id="list_log_out" type="button" class="btn btn-danger col-12 col-sm-7">Log out</button>
+              </div>
+            </div>
+
+            <!-- Div che contiene i POI -->
+            <div id="list_cont_css" class="col-12 d-flex justify-content-center">
+
+              <div id="list_css" class="list_css overflow-auto">
+
+                <!-- Riga che può contenere 2 POI -->
+                <div id="rowList" class="row col-12 g-0">
+
+                  <!-- POI card -->
+                  <div class="col-12 col-sm-6">
+                    <div class="card" style="border-radius: 10px; border:0;">
+                      <div class="row col-12">
+                        <div class="col-6">
+                          <!-- Immagine POI -->
+                          <img class="card-img" src="Turin_monte_cappuccini.jpg"
+                            style="border-radius: 10px 0px 0px 10px;">
+                        </div>
+                        <div class="col-6" style="padding: 0;">
+                          <div class="card-body">
+                            <!-- Body POI -->
+                            <h5 class="card-title">Via Roma</h5>
+                            <p class="card-text">descrizione</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- POI card -->
+                  <div class="col-12 col-sm-6">
+                    <div class="card" style="border-radius: 10px; border:0;">
+                      <div class="row col-12">
+                        <div class="col-6">
+                          <!-- Immagine POI -->
+                          <img class="card-img" src="Turin_monte_cappuccini.jpg"
+                            style="border-radius: 10px 0px 0px 10px;">
+                        </div>
+                        <div class="col-6" style="padding: 0;">
+                          <div class="card-body">
+                            <!-- Body POI -->
+                            <h5 class="card-title">Monte dei Cappuccini</h5>
+                            <p class="card-text">descrizione</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- Div post log in mappa POI -->
+          <div id="post_login_map" class="d-none col-11 col-sm-10 align-self-end">
+
+            <!-- Div che contiene l'header dei POI -->
+            <div id="map_header_css" class="d-flex justify-content-center align-items-end col-12">
+              <div class="col-9">
+                <!-- Titolo -->
+                <h1 style="font-size: calc(1em + 2.5vw);">Torino - Punti di Interesse</h1>
+              </div>
+              <div class="col-3 d-flex justify-content-end"
+                style="height:calc(1em + 2.5vw);padding:0px 20px 20px 20px;">
+                <!-- Bottone Log out -->
+                <button id="list_log_out" type="button" class="btn btn-danger col-12 col-sm-7">Log out</button>
+              </div>
+            </div>
+
+            <!-- Div che contiene la mappa POI -->
+            <div id="map_cont_css" class="col-12 d-flex justify-content-center align-items-center">
+              <div id="map" class="map col-12 col-sm-11">
+                <div id="popup" class="ol-popup">
+                  <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                  <div id="popup-content"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="index.js"></script>
+  <script src="map.js"></script>
+
+</body>
+
+</html>

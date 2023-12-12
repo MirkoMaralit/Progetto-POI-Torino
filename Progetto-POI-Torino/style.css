@@ -1,0 +1,165 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-image: url("Turin_monte_cappuccini.jpg");
+}
+
+a {
+  font-size: 14px;
+}
+
+form {
+  height: 50%;
+}
+
+#pre_login {
+  position: absolute;
+  top: 0vh;
+  transition: top 0.3s ease-in;
+}
+
+
+
+
+#blur_div_css {
+  height: 100vh;
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+#post_login_list {
+  height: 100vh;
+}
+
+#list_header_css {
+  height: 17.5vh;
+  margin: 0px;
+}
+
+#map_header_css {
+  height: 17.5vh;
+  margin: 0px;
+}
+
+#list_cont_css {
+  height: 82.5vh;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  box-shadow: 0px 0px 5px 0px #dfe0e1;
+  padding: 15px 15px 0px 15px;
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.list_css {
+  max-height: calc(82.5vh - 15px);
+  height: calc(82.5vh - 15px);
+  width: calc(100% - 30px);
+  padding: 7.5px;
+
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: inset 0px 0px 12px 3px #dfe0e1;
+  background-color: rgba(150, 150, 150, 0.05);
+
+  position: absolute;
+  transition: bottom 0.4s ease-in-out;
+  bottom: 0vh;
+}
+
+.list_css::-webkit-scrollbar {
+  display: none;
+}
+
+/* Classi per le transizioni */
+
+.top-transition {
+  top: -100vh;
+}
+
+.bottom-transition {
+  bottom: -100vh;
+}
+
+.card {
+  max-height: 20vh;
+  height: 20vh;
+  overflow: hidden;
+  box-shadow: 0px 0px 12px 3px #dfe0e1;
+  margin: 7.5px;
+  transition-timing-function: ease-out;
+  transition: margin 0.2s;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+.card-img {
+  max-height: 20vh;
+  min-height: 20vh;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#change {
+  height: 100%;
+  border-radius: 50%;
+  border: 0;
+  color: #212529;
+  background-color: white;
+}
+
+.change_div {
+  position: absolute;
+  width: 7vh;
+  height: 7vh;
+  border-radius: 50%;
+  border: 2px solid #dfe0e1;
+  bottom: calc(82.0vh - 45px);
+  z-index: 9999;
+  transform: scale(1) rotate(180deg);
+  transition: bottom 0.4s ease-in-out;
+}
+
+.change_div:hover {
+  cursor: pointer;
+  transform: scale(1.1) rotate(180deg);
+}
+
+.change_div.rot-transition:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.rot-transition {
+  transition: bottom 0.3s ease-in-out;
+  transform: scale(1);
+  bottom: -3vh;
+}
+
+.map {
+  margin: 20px;
+}
+
+#map_cont_css {
+  height: 82.5vh;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  box-shadow: 0px 0px 5px 0px #dfe0e1;
+  padding: 15px 15px 0px 15px;
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.75);
+}
