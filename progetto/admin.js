@@ -1,7 +1,6 @@
 import { login } from "./login.js";
-import { get, set, getCode} from "./cache.js";
+import { get, set} from "./cache.js";
 import { geocode } from "./geocode.js";
-
 
 const inAdminName = document.getElementById("inAdminName");
 const inAdminPass = document.getElementById("inAdminPass");
@@ -11,14 +10,15 @@ const post_login_list = document.getElementById("post_login_list");
 const pre_login = document.getElementById("pre_login");
 const list_log_out = document.getElementById("list_log_out");
 
+
 //Login credenziali: admin, admin
 const callback = (resp) => {
-  if (resp.result) {
-    pre_login.classList.remove("d-block");
+  if (resp.result && inAdminName.value==="admin") {
+    pre_login.classList.remove("d-block")
     pre_login.classList.add("d-none");
     post_login_list.classList.remove("d-none");
     post_login_list.classList.add("d-block");
-    get("poi_torino",getPOI)
+    get("poi_torino",getPOI);    
   };
 }
 
@@ -35,7 +35,9 @@ list_log_out.onclick = () => {
 };
 //////////////////////////////////////
 
+
 //Get e render dei poi dalla cache remota
+//{"id":{name:"",coords:[], img:[], desc:"..."}}
 let poi = {};
 
 const getPOI = (resp) => {
@@ -44,6 +46,15 @@ const getPOI = (resp) => {
     renderList(poi);
   };
 };
+
+const getCode=(callback)=>{
+  fetch('https://www.uuidtools.com/api/generate/v4/count/1',{
+    method: "GET"
+  })
+  .then((result) => result.json())
+  .then(callback)
+  .catch(console.error);
+}
 
 //Div dell'elenco POI
 const list_css = document.getElementById("list_css");
@@ -70,11 +81,11 @@ const poi_card_template = `
 const renderList = (poi) => {
   let i = 1;
   let html = "";
-  Object.keys(poi).forEach((name) => {
+  Object.keys(poi).forEach((id) => {
     if (i % 2 == 1) {
       html += `<div id="rowList" class="row col-12 g-0">`;
     };
-    html += poi_card_template.replace("%IMG", poi[name]["img"][0]).replace("%NAME", name).replace("%DESC", poi[name]["desc"]);
+    html += poi_card_template.replace("%IMG", poi[id]["img"][0]).replace("%NAME", poi[id]["name"]).replace("%DESC", poi[id]["desc"]);
     if (i % 2 == 0) {
       html += `</div>`;
     };
@@ -82,23 +93,58 @@ const renderList = (poi) => {
   });
   list_css.innerHTML = html;
 };
-///////////////////////////////////////7
+///////////////////////////////////////
 
 //Inserimento di un nuovo poi
 const inPOI_name = document.getElementById("POI_name");
 const inDescription = document.getElementById("POI_description");
+const inImg = document.getElementById("img");
 let POI_imgs = [];
-
+const add_img = document.getElementById("add_img");
 const save_btn = document.getElementById("save_btn");
+
 const urlGeocode = "https://api.geoapify.com/v1/geocode/search?apiKey=5e8d464f7a6f48f281288c93c1531355&text=%PLACE";
 
+// aggiunta url dell'immagine
+const modal_poi_imgs = document.getElementById("modal_imgs_container");
+let modal_img_html = '';
+const template_modal_img = 
+`
+<div class="col-6">
+  <img src="%IMG" style="border-radius: 10px 10px 10px 10px; max-height: 100px; margin-top:5%">
+</div>`
+
+add_img.onclick=()=>{
+  add_img.disabled = false;
+  POI_imgs.push(inImg.value);
+  modal_img_html+=template_modal_img.replace("%IMG",inImg.value);
+  modal_poi_imgs.innerHTML=modal_img_html;
+  inImg.value=''
+  if(POI_imgs.length===2){
+    add_img.disabled = true;
+  }
+  else{
+    add_img.disabled = false;
+  }
+}
 
 save_btn.onclick = () => {
-  geocode(urlGeocode.replace("%PLACE", inPOI_name.value), (result) => {
+  geocode(urlGeocode.replace("%PLACE", inPOI_name.value), (coord) => {
+    //calcolo codice identificativo del poi
+    coord.features.forEach((feature) => {
+      if(feature.properties.city==="Turin"){
+        getCode(result => {
+          poi[result[0]]={'img':POI_imgs,'name':inPOI_name.value,'desc':inDescription.value, 'coords': feature.geometry.coordinates};
+          renderList(poi);
+          console.log(poi);
+          //set
+          set("poi_torino",poi);
+           POI_imgs=[];
+        });
+      }
+      // console.log(feature.properties.city,feature.geometry.coordinates);
+    });
   });
-  //calcolo codice identificativo del poi
-  getCode(result => {console.log(result)});
-  //set
-  // set("poi_torino",poi)
-};
+ 
+}
 /////////////////////////////////////////////7

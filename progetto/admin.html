@@ -44,7 +44,7 @@
               </div>
               <div class="col-2 d-flex justify-content-end" style="padding:0px 20px 20px 20px;">
                 <!-- add button -->
-                <button id="add_POI" type="button" class="btn btn-outline-secondary col-12 col-sm-7"
+                <button id="add_poi" type="button" class="btn btn-outline-secondary col-12 col-sm-7"
                   data-bs-toggle="modal" data-bs-target="#modal">➕</button>
                 <!-- Bottone Log out -->
                 <button id="list_log_out" type="button" class="btn btn-danger col-12 col-sm-7">Log out</button>
@@ -58,49 +58,7 @@
 
               <div id="list_css" class="list_css overflow-auto">
 
-                <!-- Riga che può contenere 2 POI -->
-                <div class="row col-12 g-0">
-
-                  <!-- POI card -->
-                  <div class="col-12 col-sm-6">
-                    <div class="card" style="border-radius: 10px; border:0;">
-                      <div class="row col-12">
-                        <div class="col-6">
-                          <!-- Immagine POI -->
-                          <img class="card-img" src="Turin_monte_cappuccini.jpg"
-                            style="border-radius: 10px 0px 0px 10px;">
-                        </div>
-                        <div class="col-6" style="padding: 0;">
-                          <div class="card-body">
-                            <!-- Body POI -->
-                            <h5 class="card-title">Via Roma</h5>
-                            <p class="card-text">Descrizionee</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- POI card -->
-                  <div class="col-12 col-sm-6">
-                    <div class="card" style="border-radius: 10px; border:0;">
-                      <div class="row col-12">
-                        <div class="col-6">
-                          <!-- Immagine POI -->
-                          <img class="card-img" src="Turin_monte_cappuccini.jpg"
-                            style="border-radius: 10px 0px 0px 10px;">
-                        </div>
-                        <div class="col-6" style="padding: 0;">
-                          <div class="card-body">
-                            <!-- Body POI -->
-                            <h5 class="card-title">Monte dei Cappuccini</h5>
-                            <p class="card-text">Descrizionee</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              
               </div>
             </div>
           </div>
@@ -124,18 +82,21 @@
               <div class="input-group">
                 <input id='img' type="text" class="form-control" placeholder="Immagine" />
                 <div class="input-group-append">
-                  <button id='add_img' class="btn btn-outline-secondary" type="button">➕</button>
+                  <button type="button" id='add_img' class="btn btn-outline-secondary" >➕</button>
                 </div>
               </div>
+              
               <button id='save_btn' class="btn btn-outline-secondary btn-sm" type="button">
                 <span id='check_icon'>✅</span>
               </button>
             </div>
           </form>
 
-          <div class="py-3">
-            Immagini:
-            <p id="imgs_list"></p>
+          <div class="col-12 col-sm-6">
+            <div class="row col-12 g-0">
+              <div id='modal_imgs_container' style="border-radius: 10px; border:0;">
+              
+              </div>
           </div>
         </div>
         <div class="modal-footer pt-5"></div>

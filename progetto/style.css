@@ -21,7 +21,7 @@ form {
 #pre_login {
   position: absolute;
   top: 0vh;
-  transition: top 0.3s ease-in;
+  transition: top 0.25s ease-in-out;
 }
 
 
@@ -35,6 +35,10 @@ form {
 
 #post_login_list {
   height: 100vh;
+
+  position: absolute;
+  transition: bottom 0.25s ease-in-out;
+  bottom: 0vh;
 }
 
 #list_header_css {
@@ -57,7 +61,7 @@ form {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
-.list_css {
+#list_css {
   max-height: calc(82.5vh - 15px);
   height: calc(82.5vh - 15px);
   width: calc(100% - 30px);
@@ -77,18 +81,8 @@ form {
   bottom: 0vh;
 }
 
-.list_css::-webkit-scrollbar {
+#list_css::-webkit-scrollbar {
   display: none;
-}
-
-/* Classi per le transizioni */
-
-.top-transition {
-  top: -100vh;
-}
-
-.bottom-transition {
-  bottom: -100vh;
 }
 
 .card {
@@ -99,6 +93,7 @@ form {
   margin: 7.5px;
   transition-timing-function: ease-out;
   transition: margin 0.2s;
+
 }
 
 .card:hover {
@@ -112,6 +107,13 @@ form {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.card-body {
+  overflow: hidden;
+  height: 17vh;
+  background: linear-gradient( #212529 65%, white);
+  background-clip: text;
 }
 
 #change {
@@ -162,4 +164,14 @@ form {
   padding: 15px 15px 0px 15px;
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Classi per le transizioni */
+
+.top-transition {
+  top: -100vh !important;
+}
+
+.bottom-transition {
+  bottom: -100vh !important;
 }
