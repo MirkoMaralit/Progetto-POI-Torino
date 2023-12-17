@@ -1,3 +1,5 @@
+import { get, set } from "./cache.js";
+
 const container = document.getElementById('popup');
 const content = document.getElementById('popup-content');
 const closer = document.getElementById('popup-closer');
@@ -19,6 +21,7 @@ function setZoom(map, zoom) {
   map.getView().setZoom(zoom);
 }
 
+// all'aggiunta del poi viene ridimensionata la mappa affinchè tutti i marcatori siano visibili
 function updateMapExtent() {
   const extent = ol.extent.createEmpty();
   markers.forEach((marker) => {
@@ -26,17 +29,16 @@ function updateMapExtent() {
   });
 
   map.getView().fit(extent, {
-    padding: [45, 45, 45, 45],
+    padding: [5, 5, 5, 5],
   });
 }
 
-const addMarker = (map, point) => {
+// funzione per aggiungere un marcatore
+const addMarker = (point) => {
   const feature = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat(point.lonlat)),
   });
-  feature.name = point.name;
-  feature.description = point.description;
-
+  feature.id=point.id;
   const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
       features: [feature],
@@ -45,32 +47,19 @@ const addMarker = (map, point) => {
       image: new ol.style.Icon({
         anchor: [0.5, 1],
         crossOrigin: 'anonymous',
-        src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+        src: 'https://i.postimg.cc/KcNTTRTt/marker-map.png',
       }),
     }),
   });
-
-  map.on('click', function (e) {
-    const feature = map.getFeaturesAtPixel(e.pixel);
-    if (feature.length != 0) {
-      Swal.fire({
-        title: 'NOME:\n' + feature[0].name + '\nDESCRIZIONE:\n' + feature[0].description,
-        position: 'top',
-        background: 'white',
-        showConfirmButton: true,
-        showCancelButton: false,
-      });
-    }
-  });
-
   map.addLayer(layer);
   markers.push({ feature, layer });
   if(markers.length>1){
-    updateMapExtent(); // Aggiorna l'estensione della mappa per includere il nuovo marcatore
+    updateMapExtent(); // Aggiorna l'estensione della mappa per visualizzare tutti i marcatori
   }
 
 };
 
+// funzione per rimuovere un marcatore
 const remove_marker = (i) => {
   map.removeLayer(markers[i].layer);
   markers.splice(i, 1);
@@ -98,6 +87,7 @@ function initOverlay(map, points) {
   map.on('singleclick', function (event) {
     if (map.hasFeatureAtPixel(event.pixel) === true) {
       map.forEachFeatureAtPixel(event.pixel, (feature, layer) => {
+        window.location.href = "detail.html?id=" + feature.id;
         const coordinate = event.coordinate;
         overlay.setPosition(coordinate);
       });
@@ -114,8 +104,25 @@ map.height = screen.height / 1.6;
 map.getViewport().style.height = map.height + 'px';  
 setLayers(map);
 setCenter(map, [7.687276482443367,45.067397442558494]);
-setZoom(map, 12);
+setZoom(map, 10);
 initOverlay(map);
 
+// add markers
+let poi = {};
+const renderMarkers=(poi)=>{
+  let i = 1;
+  Object.keys(poi).forEach((id) => {
+    const lon = poi[id].coords[0];
+    const lat = poi[id].coords[1];
+    addMarker({lonlat:[lon,lat], id: id});
+  });
+};
 
-//export{addMarker,remove_marker};
+const callback = (resp) => {
+  poi = JSON.parse(resp.result);
+  if (Object.keys(poi).length != 0){
+    renderMarkers(poi);
+  };
+};
+
+get("poi_torino",callback);

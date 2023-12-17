@@ -13,37 +13,40 @@
 
 </head>
 
-<body>
-  <div class="d-block d-flex justify-content-center vh-100 ">
+<body style="overflow-y:auto;">
+  <div class="d-flex justify-content-center min-vh-100">
     <div class="d-flex justify-content-center col-12 col-sm-11">
-
       <div class="d-flex justify-content-center col-12 col-sm-11">
 
         <!-- Div Blur transparent -->
-        <div id="blur_div_css"
-          class="container d-flex justify-content-center col-12 col-sm-11 align-self-end shadow-lg">
-
-          <div class="col-11 bg-primary">
-            <div class="row d-flex justify-content-center">
-              <div class="col-12 d-flex justify-content-center align-items-center">
-                <h1 class=" col-5 bg-danger" id="nomepoi">%NomePOI</h1>
-                <p class=" col-5 bg-success" id="coordinate">%Coordinate</p>
-                <div class="col-2 d-flex align-items-center">
+        <div id="blur_div_css" style="height:100%;"class="d-flex justify-content-center col-12 col-sm-11 align-self-end shadow-lg">
+          
+          <div id="content" class="col-11 col-sm-10 bg-white shadow d-none p-5">
+            
+            <div class="col-12">
+              <div class="d-flex col-12 justify-content-center align-items-end">
+                <h1 class="col-6" id="nomepoi">%NomePOI</h1>
+                <p class="col-4" id="coordinate">%Coordinate</p>
+                <div class="d-flex col-2 justify-content-end align-self-center">
                   <a href="index.html" style="color: inherit;
                     text-decoration: inherit;"><button type="button" class="btn btn-danger">Indietro</button></a>
                 </div>
               </div>
             </div>
-            <div class="row d-flex justify-content-center">
-              <div class="row d-flex justify-content-center">
-                    <h1 class="col-5">%Immagini</h1>
-                    <div id="img"></div>
-                </div>
-                <div class="row d-flex justify-content-center">
-                  <p class="col-5" id="descrizione">%Descrizione</p>
-
+            
+            <div class="col-12 mt-4 mb-4">
+              <div class="d-flex col-12 ">
+                    <div id="carouselcontrols" class="d-flex col-12 carousel slide zoom-carousel" data-ride="carousel">
+                      <div id="immagini" class="d-flex overflow-hidden col-12 carousel-inner bg-light" style="border-radius:10px;border:2px solid #dfe0e1">
+                      </div> 
+                    </div>
               </div>
             </div>
+              <h4 class="col-5">Descrizione</h3>
+              <div class="overflow-auto" id="descrizione" style="overflow-wrap: break-word;">
+                  %Descrizione
+              </div>
+            
           </div>
         </div>
 
